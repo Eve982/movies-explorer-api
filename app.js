@@ -1,6 +1,6 @@
 const express = require('express');
 const process = require('process');
-const helmet = require('helmet')
+const helmet = require('helmet');
 require('dotenv').config();
 
 const mongoose = require('mongoose');
@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
-const limiter = require('./middlewares/limiter');
+const { limiter } = require('./middlewares/limiter');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 const routes = require('./routes/index');
@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors);
 mongoose.connect(MONGO_URL, { useNewUrlParser: true });
-// app.use(limiter);
+app.use(limiter);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
