@@ -2,8 +2,8 @@
 
 Фронтенд проекта находится [здесь](https://github.com/Eve982/movies-explorer-frontend).
 
-- Frontend https://ola.sytes.net/
-- Backend https://api.ola.sytes.net/
+- Frontend https://eve982.movies.nomoredomains.xyz/
+- Backend https://api.movies.nomoredomains.xyz/
 
 Приложение предоставляет возможность найти фильмы по запросу и сохранить в личном кабинете.
 
