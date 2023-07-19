@@ -23,6 +23,7 @@ module.exports.validateLogin = celebrate({
 module.exports.validateUpdateUser = celebrate({
   body: object.keys({
     name: string.required().min(2).max(30),
+    email: string.required().email(),
   }),
 });
 
