@@ -22,7 +22,9 @@ module.exports.updateUser = (req, res, next) => {
     .then((userData) => res.send(userData))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        return next(new BadRequestError('Переданы некорректные данные при обновлении профиля.'));
+        return next(new NotFoundError('Переданы некорректные данные при создании пользователя.'));
+      } if (err.code === 11000) {
+        return next(new EmailExistError(`Пользователь с email ${req.body.email} уже зарегистрирован.`));
       } return next(err);
     });
 };
