@@ -7,7 +7,7 @@ const {
 
 module.exports.validateCreateUser = celebrate({
   body: object.keys({
-    name: string.min(2).max(30),
+    name: string.required().min(2).max(30),
     email: string.required().email(),
     password: string.required(),
   }),
