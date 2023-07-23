@@ -14,6 +14,6 @@ router.use('/movies', moviesRoutes);
 router.post('/signout', logout);
 
 router.use('*', (req, res, next) => {
-  next(new NotFoundError(`Запрашиваемый ресурс ${req.baseUrl} не найден.`));
+  next(new NotFoundError('urlNotFound', req));
 });
 module.exports = router;

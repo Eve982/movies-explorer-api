@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Movie = require('../models/movies');
 const NotFoundError = require('../errors/not_found_error');
 const BadRequestError = require('../errors/bad_request_error');
+const DataExistError = require('../errors/data_exist_error');
 const { CREATED } = require('../utils/constants');
 
 module.exports.getMovies = (req, res, next) => {
@@ -34,19 +35,20 @@ module.exports.createMovie = (req, res, next) => {
     .then((movie) => res.status(CREATED).send(movie))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        return next(new NotFoundError('Переданы некорректные данные при создании карточки.'));
-      }
-      return next(err);
+        return next(new NotFoundError('invalidData'));
+      } if (err.code === 11000) {
+        return next(new DataExistError('movieExistError', req.body.movieId));
+      } return next(err);
     });
 };
 
 module.exports.deleteMovie = (req, res, next) => {
   Movie.isMovieOwner(req.params.movieId, req.user._id)
-    .then((movie) => movie.remove())
+    .then((movie) => Movie.findOneAndDelete({ _id: movie._id }).exec())
     .then((moviesData) => res.send(moviesData))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        return next(new BadRequestError('Переданы некорректные данные при удалении карточки.'));
+        return next(new BadRequestError('invalidData'));
       }
       return next(err);
     });

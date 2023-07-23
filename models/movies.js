@@ -11,6 +11,7 @@ const movieSchema = new mongoose.Schema(
     movieId: {
       type: Number,
       required: true,
+      unique: true,
     },
     nameRU: {
       type: String,
@@ -93,12 +94,12 @@ const movieSchema = new mongoose.Schema(
 );
 
 movieSchema.statics.isMovieOwner = function (movieId, userId) {
-  return this.findById(movieId).orFail(new NotFoundError('Такой фильм не существует.'))
+  return this.findOne({ movieId }).orFail(new NotFoundError('movieNotFound'))
     .then((movie) => {
       const movieOwnerId = JSON.stringify(movie.owner._id);
       const userID = JSON.stringify(userId);
       if (movieOwnerId !== userID) {
-        return Promise.reject(new ForbiddenError('Нельзя удалять чужой фильм.'));
+        return Promise.reject(new ForbiddenError('notOwnMovie'));
       }
       return movie;
     });
