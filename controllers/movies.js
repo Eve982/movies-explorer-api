@@ -6,7 +6,8 @@ const DataExistError = require('../errors/data_exist_error');
 const { CREATED } = require('../utils/constants');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({}).select({}).sort({ _id: -1 })
+  const userId = req.user._id;
+  Movie.find({ owner: userId }).select({}).sort({ _id: -1 })
     .then((moviesData) => {
       res.send(moviesData);
     })
