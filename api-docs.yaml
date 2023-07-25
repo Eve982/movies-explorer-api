@@ -1,0 +1,143 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Movies Explorer API
+  description: API for Movies Explorer app
+  contact:
+    name: Olga Bobrova
+    email: eve982@yandex.ru
+    url: 'https://github.com/Eve982'
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: Movies
+    description: Movie operations
+  - name: Auth
+    description: Authentication operations
+  - name: User
+    description: User operations
+paths:
+  /:
+    get:
+      tags:
+        - Movies
+      summary: Get About page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+  /movies:
+    get:
+      tags:
+        - Movies
+      summary: Get Movies page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+  /saved-movies:
+    get:
+      tags:
+        - Movies
+      summary: Get Saved Movies page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+  /profile:
+    get:
+      tags:
+        - User
+      summary: Get User Profile page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+  /signup:
+    get:
+      tags:
+        - Auth
+      summary: Get Signup page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: User object
+          schema:
+            $ref: '#/definitions/UserSignup'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/UserSignup'
+  /signin:
+    get:
+      tags:
+        - Auth
+      summary: Get Signin page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Auth
+      summary: Login a user
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: User object
+          schema:
+            $ref: '#/definitions/UserSignin'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserSignin'
+definitions:
+  UserSignup:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - name
+      - email
+      - password
+  UserSignin:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - email
+      - password
