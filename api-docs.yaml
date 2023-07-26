@@ -1,143 +1,170 @@
-swagger: '2.0'
+openapi: "3.0.0"
 info:
-  version: 1.0.0
-  title: Movies Explorer API
-  description: API for Movies Explorer app
-  contact:
-    name: Olga Bobrova
-    email: eve982@yandex.ru
-    url: 'https://github.com/Eve982'
-basePath: /
-schemes:
-  - http
-  - https
-consumes:
-  - application/json
-produces:
-  - application/json
-tags:
-  - name: Movies
-    description: Movie operations
-  - name: Auth
-    description: Authentication operations
-  - name: User
-    description: User operations
+  title: Simple API overview
+  version: 2.0.0
 paths:
   /:
     get:
-      tags:
-        - Movies
-      summary: Get About page
-      produces:
-        - text/html
+      operationId: listVersionsv2
+      summary: List API versions
       responses:
         '200':
-          description: OK
-  /movies:
+          description: |-
+            200 response
+          content:
+            application/json:
+              examples:
+                foo:
+                  value:
+                    {
+                      "versions": [
+                        {
+                            "status": "CURRENT",
+                            "updated": "2011-01-21T11:33:21Z",
+                            "id": "v2.0",
+                            "links": [
+                                {
+                                    "href": "http://127.0.0.1:8774/v2/",
+                                    "rel": "self"
+                                }
+                            ]
+                        },
+                        {
+                            "status": "EXPERIMENTAL",
+                            "updated": "2013-07-23T11:33:21Z",
+                            "id": "v3.0",
+                            "links": [
+                                {
+                                    "href": "http://127.0.0.1:8774/v3/",
+                                    "rel": "self"
+                                }
+                            ]
+                        }
+                      ]
+                    }
+        '300':
+          description: |-
+            300 response
+          content:
+            application/json:
+              examples:
+                foo:
+                  value: |
+                   {
+                    "versions": [
+                          {
+                            "status": "CURRENT",
+                            "updated": "2011-01-21T11:33:21Z",
+                            "id": "v2.0",
+                            "links": [
+                                {
+                                    "href": "http://127.0.0.1:8774/v2/",
+                                    "rel": "self"
+                                }
+                            ]
+                        },
+                        {
+                            "status": "EXPERIMENTAL",
+                            "updated": "2013-07-23T11:33:21Z",
+                            "id": "v3.0",
+                            "links": [
+                                {
+                                    "href": "http://127.0.0.1:8774/v3/",
+                                    "rel": "self"
+                                }
+                            ]
+                        }
+                    ]
+                   }
+  /v2:
     get:
-      tags:
-        - Movies
-      summary: Get Movies page
-      produces:
-        - text/html
+      operationId: getVersionDetailsv2
+      summary: Show API version details
       responses:
         '200':
-          description: OK
-  /saved-movies:
-    get:
-      tags:
-        - Movies
-      summary: Get Saved Movies page
-      produces:
-        - text/html
-      responses:
-        '200':
-          description: OK
-  /profile:
-    get:
-      tags:
-        - User
-      summary: Get User Profile page
-      produces:
-        - text/html
-      responses:
-        '200':
-          description: OK
-  /signup:
-    get:
-      tags:
-        - Auth
-      summary: Get Signup page
-      produces:
-        - text/html
-      responses:
-        '200':
-          description: OK
-    post:
-      tags:
-        - Auth
-      summary: Register a new user
-      consumes:
-        - application/json
-      parameters:
-        - name: user
-          in: body
-          description: User object
-          schema:
-            $ref: '#/definitions/UserSignup'
-      responses:
-        '201':
-          description: Created
-          schema:
-            $ref: '#/definitions/UserSignup'
-  /signin:
-    get:
-      tags:
-        - Auth
-      summary: Get Signin page
-      produces:
-        - text/html
-      responses:
-        '200':
-          description: OK
-    post:
-      tags:
-        - Auth
-      summary: Login a user
-      consumes:
-        - application/json
-      parameters:
-        - name: user
-          in: body
-          description: User object
-          schema:
-            $ref: '#/definitions/UserSignin'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/UserSignin'
-definitions:
-  UserSignup:
-    type: object
-    properties:
-      name:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-    required:
-      - name
-      - email
-      - password
-  UserSignin:
-    type: object
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-    required:
-      - email
-      - password
+          description: |-
+            200 response
+          content:
+            application/json:
+              examples:
+                foo:
+                  value:
+                    {
+                      "version": {
+                        "status": "CURRENT",
+                        "updated": "2011-01-21T11:33:21Z",
+                        "media-types": [
+                          {
+                              "base": "application/xml",
+                              "type": "application/vnd.openstack.compute+xml;version=2"
+                          },
+                          {
+                              "base": "application/json",
+                              "type": "application/vnd.openstack.compute+json;version=2"
+                          }
+                        ],
+                        "id": "v2.0",
+                        "links": [
+                          {
+                              "href": "http://127.0.0.1:8774/v2/",
+                              "rel": "self"
+                          },
+                          {
+                              "href": "http://docs.openstack.org/api/openstack-compute/2/os-compute-devguide-2.pdf",
+                              "type": "application/pdf",
+                              "rel": "describedby"
+                          },
+                          {
+                              "href": "http://docs.openstack.org/api/openstack-compute/2/wadl/os-compute-2.wadl",
+                              "type": "application/vnd.sun.wadl+xml",
+                              "rel": "describedby"
+                          },
+                          {
+                            "href": "http://docs.openstack.org/api/openstack-compute/2/wadl/os-compute-2.wadl",
+                            "type": "application/vnd.sun.wadl+xml",
+                            "rel": "describedby"
+                          }
+                        ]
+                      }
+                    }
+        '203':
+          description: |-
+            203 response
+          content:
+            application/json:
+              examples:
+                foo:
+                  value:
+                    {
+                      "version": {
+                        "status": "CURRENT",
+                        "updated": "2011-01-21T11:33:21Z",
+                        "media-types": [
+                          {
+                              "base": "application/xml",
+                              "type": "application/vnd.openstack.compute+xml;version=2"
+                          },
+                          {
+                              "base": "application/json",
+                              "type": "application/vnd.openstack.compute+json;version=2"
+                          }
+                        ],
+                        "id": "v2.0",
+                        "links": [
+                          {
+                              "href": "http://23.253.228.211:8774/v2/",
+                              "rel": "self"
+                          },
+                          {
+                              "href": "http://docs.openstack.org/api/openstack-compute/2/os-compute-devguide-2.pdf",
+                              "type": "application/pdf",
+                              "rel": "describedby"
+                          },
+                          {
+                              "href": "http://docs.openstack.org/api/openstack-compute/2/wadl/os-compute-2.wadl",
+                              "type": "application/vnd.sun.wadl+xml",
+                              "rel": "describedby"
+                          }
+                        ]
+                      }
+                    }
