@@ -10,7 +10,7 @@ const { validateLogin, validateCreateUser } = require('../middlewares/validatior
 
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocs));
-console.log('swaggerDocs: ', swaggerDocs);
+router.get('/');
 router.post('/signin', validateLogin, login);
 router.post('/signup', validateCreateUser, createUser);
 router.use(auth);
