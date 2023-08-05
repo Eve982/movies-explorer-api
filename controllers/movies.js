@@ -44,7 +44,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.isMovieOwner(req.params.movieId, req.user._id)
+  Movie.find({ movieId: req.params.movieId, owner: req.user._id })
     .then((movie) => Movie.findOneAndDelete({ _id: movie._id }).exec())
     .then((moviesData) => res.send(moviesData))
     .catch((err) => {

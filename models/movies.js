@@ -1,36 +1,29 @@
 const mongoose = require('mongoose');
 const isURL = require('validator/lib/isURL');
-const NotFoundError = require('../errors/not_found_error');
-const ForbiddenError = require('../errors/forbidden_error');
-const {
-  REGEX_RU_LANG, REGEX_EN_LANG, REGEX_COUNTRY, REGEX_YEAR,
-} = require('../utils/constants');
+const { REGEX_YEAR } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema(
   {
     movieId: {
       type: Number,
       required: true,
-      unique: true,
     },
     nameRU: {
       type: String,
       minlength: [2, 'Минимальная длина поля 2 символа, введено {VALUE}.'],
-      maxlength: [30, 'Максимальная длина поля 30 символа, введено {VALUE}.'],
-      match: [REGEX_RU_LANG, 'Поле должно содержать только кириллицу.'],
+      maxlength: [300, 'Максимальная длина поля 300 символа, введено {VALUE}.'],
       required: true,
     },
     nameEN: {
       type: String,
       minlength: [2, 'Минимальная длина поля 2 символа, введено {VALUE}.'],
-      maxlength: [30, 'Максимальная длина поля 30 символа, введено {VALUE}.'],
-      match: [REGEX_EN_LANG, 'Поле должно содержать только латиницу.'],
+      maxlength: [300, 'Максимальная длина поля 300 символа, введено {VALUE}.'],
       required: true,
     },
     description: {
       type: String,
       minlength: [10, 'Минимальная длина поля 10 символа, введено {VALUE}.'],
-      maxlength: [300, 'Максимальная длина поля 300 символа, введено {VALUE}.'],
+      maxlength: [3000, 'Максимальная длина поля 3000 символа, введено {VALUE}.'],
       required: true,
     },
     owner: {
@@ -41,13 +34,7 @@ const movieSchema = new mongoose.Schema(
     country: {
       type: String,
       minlength: [4, 'Минимальная длина поля 4 символа, введено {VALUE}.'],
-      maxlength: [60, 'Максимальная длина поля 60 символа, введено {VALUE}.'],
-      validate: {
-        validator(v) {
-          return REGEX_COUNTRY.test(v);
-        },
-        message: 'Значение поля {VALUE} не соответствует формату названия страны.',
-      },
+      maxlength: [600, 'Максимальная длина поля 600 символа, введено {VALUE}.'],
       required: true,
     },
     director: {
@@ -93,16 +80,6 @@ const movieSchema = new mongoose.Schema(
   { versionKey: false },
 );
 
-movieSchema.statics.isMovieOwner = function (movieId, userId) {
-  return this.findOne({ movieId }).orFail(new NotFoundError('movieNotFound'))
-    .then((movie) => {
-      const movieOwnerId = JSON.stringify(movie.owner._id);
-      const userID = JSON.stringify(userId);
-      if (movieOwnerId !== userID) {
-        return Promise.reject(new ForbiddenError('notOwnMovie'));
-      }
-      return movie;
-    });
-};
+movieSchema.index({ movieId: 1, owner: 1 }, { unique: true });
 
 module.exports = mongoose.model('movie', movieSchema);
