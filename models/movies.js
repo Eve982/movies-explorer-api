@@ -33,7 +33,7 @@ const movieSchema = new mongoose.Schema(
     },
     country: {
       type: String,
-      minlength: [4, 'Минимальная длина поля 4 символа, введено {VALUE}.'],
+      minlength: [3, 'Минимальная длина поля 3 символа, введено {VALUE}.'],
       maxlength: [600, 'Максимальная длина поля 600 символа, введено {VALUE}.'],
       required: true,
     },
