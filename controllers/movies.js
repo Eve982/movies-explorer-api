@@ -44,9 +44,12 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.find({ movieId: req.params.movieId, owner: req.user._id })
-    .then((movie) => Movie.findOneAndDelete({ _id: movie._id }).exec())
-    .then((moviesData) => res.send(moviesData))
+  Movie.deleteOne({ movieId: req.params.movieId, owner: req.user._id })
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        throw new NotFoundError('movieNotFound');
+      } res.send({ message: 'Фильм успешно удален!' });
+    })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
         return next(new BadRequestError('invalidData'));

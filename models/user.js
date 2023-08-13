@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: [2, 'Минимальная длина поля 2 символа, введено {VALUE}.'],
-    maxlength: [30, 'Максимальная длина поля 30 символа, введено {VALUE}.'],
+    maxlength: [30, 'Максимальная длина поля 30 символов, введено {VALUE}.'],
   },
   email: {
     type: String,
@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    // minlength: [3, 'Минимальная длина поля 3 символа, введено {VALUE}.'],
+    // maxlength: [8, 'Максимальная длина поля 8 символов, введено {VALUE}.'],
+    // match: [REGEX_PASSWORD,
+    //   'Пароль должен быть длиной от 3 до 14 символов,
+    //  и содержать минимум одну цифру, одну заглавную букву и один специальный символ.'],
     select: false,
   },
 }, { versionKey: false });
