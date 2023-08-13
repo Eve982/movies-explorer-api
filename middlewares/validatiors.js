@@ -33,7 +33,7 @@ module.exports.validateCreateMovie = celebrate({
     nameEN: Joi.string().required().min(2).max(300),
     description: Joi.string().required().min(10).max(3000),
     country: Joi.string().required().min(3).max(600),
-    director: Joi.string().required().min(3).max(50),
+    director: Joi.string().required().min(3).max(500),
     thumbnail: Joi.string().required().regex(REGEX_LINK),
     image: Joi.string().required().regex(REGEX_LINK),
     trailerLink: Joi.string().required().regex(REGEX_LINK),

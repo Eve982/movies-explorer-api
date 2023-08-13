@@ -40,7 +40,7 @@ const movieSchema = new mongoose.Schema(
     director: {
       type: String,
       minlength: [3, 'Минимальная длина поля 3 символа, введено {VALUE}.'],
-      maxlength: [50, 'Максимальная длина поля 50 символа, введено {VALUE}.'],
+      maxlength: [500, 'Максимальная длина поля 500 символа, введено {VALUE}.'],
       required: true,
     },
     thumbnail: {

@@ -11,12 +11,19 @@ const { validateLogin, validateCreateUser } = require('../middlewares/validatior
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocs));
 router.get('/');
+// router.get('/', (req, res, next) => {
+//   if (req.user) {
+//     res.redirect('/');
+//   } else {
+//     next();
+//   }
+// });
 router.post('/signin', validateLogin, login);
 router.post('/signup', validateCreateUser, createUser);
+router.post('/signout', logout);
 router.use(auth);
 router.use('/users', usersRoutes);
 router.use('/movies', moviesRoutes);
-router.post('/signout', logout);
 
 router.use('*', (req, res, next) => {
   next(new NotFoundError('urlNotFound', req));
