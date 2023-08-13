@@ -43,10 +43,32 @@ module.exports.createMovie = (req, res, next) => {
     });
 };
 
+// module.exports.deleteMovie = (req, res, next) => {
+//   // console.log('req.user._id: ', req.user._id);
+//   // console.log('req.params.movieId: ', req.params.movieId);
+//   // console.log('typeof req.params.movieId: ', typeof req.params.movieId);
+//   // console.log('typeof req.user._id: ', typeof req.user._id);
+//   Movie.find({ movieId: req.params.movieId, owner: req.user._id })
+//     .then((movie) => console.log('movie: ', movie))
+//     .then((movie) => {
+//       Movie.findOneAndDelete({ _id: movie._id }).exec();
+//     })
+//     .then((moviesData) => res.send(moviesData))
+//     .catch((err) => {
+//       if (err instanceof mongoose.Error.CastError) {
+//         return next(new BadRequestError('invalidData'));
+//       }
+//       return next(err);
+//     });
+// };
+
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.isMovieOwner(req.params.movieId, req.user._id)
-    .then((movie) => Movie.findOneAndDelete({ _id: movie._id }).exec())
-    .then((moviesData) => res.send(moviesData))
+  Movie.deleteOne({ movieId: req.params.movieId, owner: req.user._id })
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        throw new NotFoundError('movieNotFound');
+      }
+    })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
         return next(new BadRequestError('invalidData'));

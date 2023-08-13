@@ -11,7 +11,17 @@ const cors = require('./middlewares/cors');
 const { limiter } = require('./middlewares/limiter');
 const errorHandler = require('./errors/error_handler');
 
-const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+let PORT;
+let MONGO_URL;
+
+if (process.env.NODE_ENV !== 'production') {
+  PORT = 3000;
+  MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb';
+} else {
+  PORT = process.env.PORT;
+  MONGO_URL = process.env.MONGO_URL;
+}
+
 const routes = require('./routes/index');
 
 const app = express();
