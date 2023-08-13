@@ -13,8 +13,8 @@ const ALLOWED_CORS = [
 ];
 const LOGIN_MESSAGE = 'Вход выполнен успешно!';
 const LOGOUT_MESSAGE = 'Вы вышли из аккаунта.';
-// const REGEX_PASSWORD = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,14}$/;
 const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// const REGEX_PASSWORD = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,14}$/;
 // const REGEX_COUNTRY = /^[^"]+"([^"]+)"$/;
 // const REGEX_RU_LANG = /^[а-яА-ЯёЁ\s]+$/;
 // const REGEX_EN_LANG = /^[a-zA-Z\s\d\-()]+$/;
@@ -29,8 +29,8 @@ module.exports = {
   ALLOWED_CORS,
   LOGIN_MESSAGE,
   LOGOUT_MESSAGE,
-  // REGEX_PASSWORD,
   REGEX_EMAIL,
+  // REGEX_PASSWORD,
   // REGEX_COUNTRY,
   // REGEX_RU_LANG,
   // REGEX_EN_LANG,
